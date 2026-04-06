@@ -1,0 +1,10 @@
+services:
+  angular-app:
+    image: node:22-alpine
+    container_name: student-library
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: ["sh", "-c", "npm install -g @angular/cli && tail -f /dev/null"]
+    ports:
+      - "4200:4200"

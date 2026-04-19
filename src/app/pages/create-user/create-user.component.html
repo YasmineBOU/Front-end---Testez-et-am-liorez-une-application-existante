@@ -1,0 +1,10 @@
+<div class="form-page">
+  <h2>Create New User</h2>
+
+  <app-user-form
+    [fields]="createUserFields"
+    [submitLabel]="'Create User'"
+    [resetLabel]="'Clear'"
+    (formSubmit)="onSubmit($event)">
+  </app-user-form>
+</div>

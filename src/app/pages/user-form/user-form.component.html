@@ -1,0 +1,24 @@
+<form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div *ngFor="let field of fields" class="user-form__field" [hidden]="field.hidden">
+    <label [for]="field.name" class="user-form__label">{{ field.label }}</label>
+
+    <ng-container [ngSwitch]="field.type">
+      <input *ngSwitchCase="'text'" [formControlName]="field.name" [id]="field.name" type="text" class="user-form__input" />
+      <input *ngSwitchCase="'email'" [formControlName]="field.name" [id]="field.name" type="email" class="user-form__input" />
+      <input *ngSwitchCase="'password'" [formControlName]="field.name" [id]="field.name" type="password" class="user-form__input" />
+      <select *ngSwitchCase="'select'" [formControlName]="field.name" [id]="field.name" class="user-form__select">
+        <option *ngFor="let option of field.options" [value]="option.key">{{ option.value }}</option>
+      </select>
+    </ng-container>
+
+    <div *ngIf="getControl(field.name)?.invalid && (getControl(field.name)?.touched || getControl(field.name)?.dirty)" class="user-form__error">
+      <small *ngIf="getControl(field.name)?.errors?.['required']">{{ field.label }} is required.</small>
+      <small *ngIf="getControl(field.name)?.errors?.['email']">Invalid email format.</small>
+    </div>
+  </div>
+
+  <div class="user-form__actions">
+    <button type="submit" class="user-form__submit-button">{{ submitLabel }}</button>
+    <button *ngIf="showResetButton" type="button" class="user-form__reset-button" (click)="onReset()">{{ resetLabel }}</button>
+  </div>
+</form>

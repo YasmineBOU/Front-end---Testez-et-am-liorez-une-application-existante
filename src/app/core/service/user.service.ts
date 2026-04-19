@@ -18,4 +18,15 @@ export class UserService {
     // return this.httpClient.post('/api/login', user);
     return this.httpClient.post<{ token: string }>('/api/login', user);
   }
+
+  // createUser(user: Register): Observable<Object> {
+  //   return this.httpClient.post('/api/create-user', user);
+  // }
+  createUser(user: Register): Observable<Object> {
+    return this.httpClient.post('/api/add-user', user);
+  }
+
+  updateUser(user: Register): Observable<Object> {
+    return this.httpClient.put('/api/update-user/{id}', user);
+  }
 }

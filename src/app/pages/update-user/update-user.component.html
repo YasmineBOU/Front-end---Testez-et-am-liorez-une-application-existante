@@ -1,0 +1,11 @@
+<div class="form-page">
+  <h2>Update User Form</h2>
+
+  <app-user-form
+    [fields]="updateUserFields"
+    [submitLabel]="'Update'"
+    [resetLabel]="'Clear'"
+    (formSubmit)="onSubmit($event)">
+  </app-user-form>
+
+</div>

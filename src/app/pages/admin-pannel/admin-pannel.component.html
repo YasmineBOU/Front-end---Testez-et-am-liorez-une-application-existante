@@ -1,0 +1,36 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h1 class="admin-title">Admin Panel</h1>
+    <p class="admin-subtitle">Manage users and system settings</p>
+  </div>
+
+  <div class="admin-actions">
+    <div class="admin-card">
+      <button class="admin-button list-users" (click)="onListUsers()">
+        <span class="admin-icon">👥</span>
+        List Users
+      </button>
+    </div>
+
+    <div class="admin-card">
+      <button class="admin-button create-user" (click)="onCreateUser()">
+        <span class="admin-icon">➕</span>
+        Create User
+      </button>
+    </div>
+
+    <div class="admin-card">
+      <button class="admin-button update-user" (click)="onUpdateUser()">
+        <span class="admin-icon">✏️</span>
+        Update User
+      </button>
+    </div>
+
+    <div class="admin-card">
+      <button class="admin-button delete-user" (click)="onDeleteUser()">
+        <span class="admin-icon">🗑️</span>
+        Delete User
+      </button>
+    </div>
+  </div>
+</div>

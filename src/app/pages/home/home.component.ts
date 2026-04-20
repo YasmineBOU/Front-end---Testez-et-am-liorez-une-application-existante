@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('authToken');
+  }
 
   onRegister(): void {
     this.router.navigateByUrl('register');

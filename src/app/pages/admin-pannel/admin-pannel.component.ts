@@ -9,22 +9,25 @@ import { Router } from '@angular/router';
 })
 export class AdminPannelComponent {
 
+  login = localStorage.getItem('loggedInUser') || 'Admin';
   constructor(private router: Router) {}
 
   onListUsers(): void {
-    this.router.navigateByUrl('crud/list-users');
+    this.router.navigateByUrl('/crud/list-user');
   }
 
   onCreateUser(): void {
-    this.router.navigateByUrl('crud/create-user');
+    this.router.navigateByUrl('/crud/create-user');
   } 
 
   onUpdateUser(): void {
-    this.router.navigateByUrl('crud/update-user');
+    // Redirect to list users page where the admin can select a user to update
+    this.router.navigateByUrl('/crud/list-user');
   }
 
   onDeleteUser(): void {
-    this.router.navigateByUrl('crud/delete-user');
+    // Redirect to list users page where the admin can select a user to delete
+    this.router.navigateByUrl('/crud/list-user');
   }
   
 }

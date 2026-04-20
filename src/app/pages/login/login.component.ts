@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       login: formData.login,
       password: formData.password
     };
-    console.log(loginUser);
+    console.log(loginUser.login);
     this.userService.login(loginUser)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
           alert('Logged in successfully !');
           console.log("\n\n****Login token : ", response.token);
           this.authService.setToken(response.token);
+          localStorage.setItem('loggedInUser', loginUser.login);
           this.router.navigateByUrl('/admin-pannel');
 
         },

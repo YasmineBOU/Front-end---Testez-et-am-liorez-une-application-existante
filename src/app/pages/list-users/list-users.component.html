@@ -1,1 +1,37 @@
-<p>list-users works!</p>
+<div class="list-container" *ngIf="users.length > 0; else noData">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let property of properties">{{ property | titlecase }}</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td *ngFor="let property of properties" [attr.data-label]="property | titlecase">
+            @if (property === 'created_at' || property === 'updated_at'){
+                {{ user[property] | date:'dd/MM/yyyy HH:mm' }}
+            }
+            @else{
+                {{ user[property] }}
+            }
+        </td>
+        <td>
+            <button class="button button-view" title="View" (click)="onViewUser(user)">
+                <span class="material-icons" aria-hidden="true">loop</span> View
+            </button>
+            <button class="button button-edit" title="Edit" (click)="onEditUser(user)">
+                <span class="material-icons" aria-hidden="true">edit</span> Edit
+            </button>
+            <button class="button button-delete" title="Delete" (click)="onDeleteUser(user)">
+                <span class="material-icons" aria-hidden="true">delete</span> Delete
+            </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noData>
+  <p>No users found.</p>
+</ng-template>

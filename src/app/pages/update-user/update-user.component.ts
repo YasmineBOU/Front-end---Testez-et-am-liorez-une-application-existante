@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+﻿import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../shared/material.module';
 import { UserService } from '../../core/service/user.service';
@@ -21,7 +21,9 @@ export class UpdateUserComponent implements OnInit {
   private userService = inject(UserService);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   updateUserFields: FormField[] = [];
+  userData: any = {};
   submitted = false;
 
   // constructor(private router: Router, private route: ActivatedRoute) { }

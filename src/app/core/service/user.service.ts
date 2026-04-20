@@ -23,6 +23,10 @@ export class UserService {
     return this.httpClient.get<Register[]>('/api/read-user');
   }
 
+  getUserById(userId: number): Observable<Register> {
+    return this.httpClient.get<Register>(`/api/read-user/${userId}`);
+  }
+
   viewUser(user : Register): Observable<Register> {
     return this.httpClient.get<Register>(`/api/read-user/${user['id']}`);
   }
@@ -31,8 +35,8 @@ export class UserService {
     return this.httpClient.post('/api/add-user', user);
   }
 
-  updateUser(user: Register): Observable<Object> {
-    return this.httpClient.put('/api/update-user/{id}', user);
+  updateUser(userId: number, user: Register): Observable<Object> {
+    return this.httpClient.put(`/api/update-user/${userId}`, user);
   }
 
   deleteUser(userId: number): Observable<Object> {

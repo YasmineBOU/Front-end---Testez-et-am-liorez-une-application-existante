@@ -3,6 +3,7 @@
 
   <app-user-form
     [fields]="updateUserFields"
+    [initialData]="userData"
     [submitLabel]="'Update'"
     [resetLabel]="'Clear'"
     (formSubmit)="onSubmit($event)">

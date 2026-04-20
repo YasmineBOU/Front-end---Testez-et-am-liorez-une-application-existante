@@ -11,7 +11,7 @@ import { FormField } from '../../core/models/FormField';
 
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-update-user',
   standalone: true,
   imports: [CommonModule, MaterialModule, UserFormComponent],
   templateUrl: './update-user.component.html',
@@ -24,17 +24,51 @@ export class UpdateUserComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   updateUserFields: FormField[] = [];
   userData: any = {};
+  userId!: number;
+  isLoading = true;
   submitted = false;
 
   // constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.updateUserFields = [
-      { name: 'firstName', label: 'First Name', type: 'text', validators: [Validators.required] },
-      { name: 'lastName', label: 'Last Name', type: 'text', validators: [Validators.required] },
-      { name: 'login', label: 'Login', type: 'text', validators: [Validators.required] },
-      { name: 'password', label: 'Password', type: 'password', validators: [Validators.required] }
+      { name: 'firstName', label: 'First Name', type: 'text'},
+      { name: 'lastName', label: 'Last Name', type: 'text'},
+      { name: 'login', label: 'Login', type: 'text'},
+      { name: 'password', label: 'Password', type: 'password'}
     ];
+
+    const idFromRoute = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    if (!idFromRoute) {
+      alert('Invalid user id.');
+      this.router.navigateByUrl('/crud/list-user');
+      return;
+    }
+
+    this.userId = idFromRoute;
+    this.loadUserToEdit();
+  }
+
+  private loadUserToEdit(): void {
+    this.isLoading = true;
+    this.userService.getUserById(this.userId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (user) => {
+          this.userData = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            login: user.login,
+            password: user.password ?? ''
+          };
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+          alert('Unable to load user: ' + err.message);
+          this.router.navigateByUrl('/crud/list-user');
+        }
+      });
   }
 
   onSubmit(formData: any): void {
@@ -52,12 +86,12 @@ export class UpdateUserComponent implements OnInit {
       password: formData.password
     };
 
-    this.userService.updateUser(updateUser)
+    this.userService.updateUser(this.userId, updateUser)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           alert('User updated successfully!');
-          this.router.navigateByUrl('admin-pannel');
+          this.router.navigateByUrl('/crud/list-user');
         },
         error: (err) => {
           alert('Something went wrong : ' + err.message);

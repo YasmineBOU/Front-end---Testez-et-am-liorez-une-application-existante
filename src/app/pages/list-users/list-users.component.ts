@@ -6,24 +6,32 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-users',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './list-users.component.html',
-  styleUrl: './list-users.component.css'
+  styleUrls: ['./list-users.component.css']
 })
 export class ListUsersComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
   users: Register[] = [];
-  properties: string[] = []
+  properties: string[] = [];
+  isLoading = true;
+  errorMessage = '';
 
   ngOnInit(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
     this.userService.listUsers().subscribe({
       next: (users) => {
         this.users = users;
-        this.properties = Object.keys(users[0]);
-
-        console.log("Users properties : ", this.properties);
-        console.log("Users list : ", this.users);
+        this.properties = users.length > 0 ? Object.keys(users[0]) : [];
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Unable to load users. Please try again.';
+        this.isLoading = false;
       }
     });
   }

@@ -1,37 +1,60 @@
-<div class="list-container" *ngIf="users.length > 0; else noData">
-  <table>
-    <thead>
-      <tr>
-        <th *ngFor="let property of properties">{{ property | titlecase }}</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td *ngFor="let property of properties" [attr.data-label]="property | titlecase">
-            @if (property === 'created_at' || property === 'updated_at'){
-                {{ user[property] | date:'dd/MM/yyyy HH:mm' }}
+<section class="users-page">
+  <header class="users-page__header">
+    <div>
+      <h2>Users Directory</h2>
+      <p>Browse, view, and manage library users.</p>
+    </div>
+    <span class="users-page__counter" *ngIf="!isLoading">{{ users.length }} users</span>
+  </header>
+
+  <div class="users-state users-state--loading" *ngIf="isLoading">
+    <span class="material-icons" aria-hidden="true">hourglass_top</span>
+    <p>Loading users...</p>
+  </div>
+
+  <div class="users-state users-state--error" *ngIf="!isLoading && errorMessage">
+    <span class="material-icons" aria-hidden="true">error_outline</span>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div class="users-state users-state--empty" *ngIf="!isLoading && !errorMessage && users.length === 0">
+    <span class="material-icons" aria-hidden="true">groups_2</span>
+    <p>No users found.</p>
+  </div>
+
+  <div class="users-table-wrapper" *ngIf="!isLoading && !errorMessage && users.length > 0">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th *ngFor="let property of properties">{{ property | titlecase }}</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td *ngFor="let property of properties" [attr.data-label]="property | titlecase">
+            @if (property === 'created_at' || property === 'updated_at') {
+              {{ user[property] | date:'dd/MM/yyyy HH:mm' }}
+            } @else {
+              {{ user[property] }}
             }
-            @else{
-                {{ user[property] }}
-            }
-        </td>
-        <td>
+          </td>
+          <td class="users-table__actions" data-label="Actions">
             <button class="button button-view" title="View" (click)="onViewUser(user)">
-                <span class="material-icons" aria-hidden="true">loop</span> View
+              <span class="material-icons" aria-hidden="true">visibility</span>
+              View
             </button>
             <button class="button button-edit" title="Edit" (click)="onEditUser(user)">
-                <span class="material-icons" aria-hidden="true">edit</span> Edit
+              <span class="material-icons" aria-hidden="true">edit</span>
+              Edit
             </button>
             <button class="button button-delete" title="Delete" (click)="onDeleteUser(user)">
-                <span class="material-icons" aria-hidden="true">delete</span> Delete
+              <span class="material-icons" aria-hidden="true">delete</span>
+              Delete
             </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<ng-template #noData>
-  <p>No users found.</p>
-</ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

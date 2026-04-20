@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../shared/material.module';
 
 interface FormField {
@@ -24,7 +24,7 @@ interface FormField {
   styleUrls: ['./user-form.component.css']
 })
 
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnChanges {
   @Input() initialData: any = {};
   @Input() fields: FormField[] = [];
   @Input() submitLabel = 'Submit';
@@ -47,11 +47,29 @@ export class UserFormComponent implements OnInit {
  * array if no validators are provided.
  */
   ngOnInit(): void {
+    this.buildForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.userForm) {
+      return;
+    }
+
+    if (changes['initialData'] && this.initialData) {
+      this.userForm.patchValue(this.initialData);
+    }
+
+    if (changes['fields'] && !changes['fields'].firstChange) {
+      this.buildForm();
+    }
+  }
+
+  private buildForm(): void {
     const formControlsConfig: { [key: string]: any } = {};
 
     this.fields.forEach(field => {
       formControlsConfig[field.name] = [
-        this.initialData[field.name] || '',
+        this.initialData[field.name] ?? '',
         field.validators || []
       ];
     });

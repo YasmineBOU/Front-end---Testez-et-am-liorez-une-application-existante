@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../shared/material.module';
 import { UserService } from '../../core/service/user.service';
-import { Register } from '../../core/models/Register';
+import { AddUser } from '../../core/models/AddUser';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
@@ -14,7 +14,7 @@ import { FormField } from '../../core/models/FormField';
   standalone: true,
   imports: [CommonModule, MaterialModule, UserFormComponent],
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+  styleUrl: './create-user.component.css'
 })
 export class CreateUserComponent implements OnInit {
   private userService = inject(UserService);
@@ -35,8 +35,8 @@ export class CreateUserComponent implements OnInit {
         type: 'select',
         validators: [Validators.required],
         options: [
-          { key: 'user', value: 'User' },
-          { key: 'admin', value: 'Admin' }
+          { key: 'user', value: 'USER' },
+          { key: 'admin', value: 'ADMIN' }
         ]
       }
     ];
@@ -49,11 +49,12 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
-    const newUser: Register = {
+    const newUser: AddUser = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       login: formData.login,
-      password: formData.password
+      password: formData.password,
+      role: formData.role
     };
 
     this.userService.createUser(newUser)

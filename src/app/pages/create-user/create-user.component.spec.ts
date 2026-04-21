@@ -15,7 +15,7 @@ import { FormField } from '../../core/models/FormField';
   standalone: true,
   imports: [CommonModule, MaterialModule, UserFormComponent],
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+  styleUrl: './create-user.component.css'
 })
 export class CreateUserComponent implements OnInit {
   private userService = inject(UserService);

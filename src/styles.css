@@ -68,3 +68,54 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .back-home-btn .material-icons {
   font-size: 1.5rem;
 }
+
+.button {
+  /* display: inline-flex; */
+  align-items: center;
+  gap: 0.35rem;
+  border: none;
+  border-radius: 999px;
+  /* padding: 0.45rem 0.85rem; */
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  
+  display: flex;
+  justify-content: center; /* centre horizontalement */
+  height: 40px;            /* exemple de hauteur */
+  padding: 0 20px; 
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.95);
+}
+
+.button .material-icons {
+  font-size: 1rem;
+}
+
+.button-view {
+  background: #1f7f4a;
+}
+
+.button-edit {
+  background: #2d5fbe;
+}
+
+.button-delete {
+  background: #c94646;
+}
+
+.button-back {
+  background: #6c757d;
+}
+
+
+.btn-container {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; 
+}

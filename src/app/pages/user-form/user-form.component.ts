@@ -6,10 +6,10 @@ import { MaterialModule } from '../../shared/material.module';
 interface FormField {
   name: string;
   label: string;
-  type: string; // ex: 'text', 'email', 'password', 'select', etc.
+  type: string; 
   validators?: any[];
-  options?: { key: string, value: string }[]; // pour les selects
-  hidden?: boolean; // pour masquer certains champs si besoin
+  options?: { key: string, value: string }[]; 
+  hidden?: boolean;
 }
 
 @Component({
@@ -21,7 +21,7 @@ interface FormField {
     ReactiveFormsModule
   ],
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css']
+  styleUrl: './user-form.component.css'
 })
 
 export class UserFormComponent implements OnInit, OnChanges {

@@ -1,0 +1,56 @@
+<section class="detail-page">
+  <div *ngIf="!userInfo" class="state-card">
+    <span class="material-icons" aria-hidden="true">hourglass_top</span>
+    <p>Loading user details...</p>
+  </div>
+
+  <div *ngIf="userInfo">
+    <header class="detail-hero">
+      <div class="detail-hero__avatar" aria-hidden="true">
+        {{ userInfo.firstName.charAt(0) }}{{ userInfo.lastName.charAt(0) }}
+      </div>
+      <div class="detail-hero__content">
+        <p class="detail-hero__eyebrow">User profile</p>
+        <h1>{{ userInfo.firstName }} {{ userInfo.lastName }}</h1>
+        <p class="detail-hero__subtitle">{{ userInfo.login }}</p>
+      </div>
+      <span class="detail-hero__badge" [class.detail-hero__badge--admin]="userInfo.role === 'ADMIN'">
+        {{ userInfo.role }}
+      </span>
+    </header>
+
+    <div class="detail-grid">
+      <article class="detail-card detail-card--main">
+        <h2>Identity</h2>
+        <dl class="detail-list">
+          <div class="detail-list__item"><dt>ID</dt><dd>{{ userInfo.id }}</dd></div>
+          <div class="detail-list__item"><dt>First Name</dt><dd>{{ userInfo.firstName }}</dd></div>
+          <div class="detail-list__item"><dt>Last Name</dt><dd>{{ userInfo.lastName }}</dd></div>
+          <div class="detail-list__item"><dt>Login</dt><dd>{{ userInfo.login }}</dd></div>
+          <div class="detail-list__item"><dt>Role</dt><dd>{{ userInfo.role }}</dd></div>
+          <div class="detail-list__item"><dt>Created At</dt><dd>{{ userInfo.created_at | date:'dd/MM/yyyy, HH:mm' }}</dd></div>
+          <div class="detail-list__item"><dt>Updated At</dt><dd>{{ userInfo.updated_at | date:'dd/MM/yyyy, HH:mm' }}</dd></div>
+        </dl>
+      </article>
+
+      <article class="detail-card detail-card--side">
+          
+          <h2>Actions</h2>
+          <div class="btn-container">
+                <button type="button" class="button button-back" (click)="onBackHome()">
+                    Back to users list
+                </button>
+
+                <button type="button" class="button button-edit" (click)="onEditUser()">
+                    Edit User
+                </button>
+                
+                <button type="button" class="button button-delete" (click)="onDeleteUser()">
+                    Delete User 
+                </button>
+            </div>
+
+      </article>
+    </div>
+  </div>
+</section>

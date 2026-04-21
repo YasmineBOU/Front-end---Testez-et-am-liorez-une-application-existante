@@ -1,13 +1,14 @@
 ﻿import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 import { MaterialModule } from '../../shared/material.module';
 import { UserService } from '../../core/service/user.service';
-import { Register } from '../../core/models/Register';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { FormField } from '../../core/models/FormField';
+import { AddUser } from '../../core/models/AddUser';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { FormField } from '../../core/models/FormField';
   standalone: true,
   imports: [CommonModule, MaterialModule, UserFormComponent],
   templateUrl: './update-user.component.html',
-  styleUrls: ['./update-user.component.css']
+  styleUrl: './update-user.component.css'
 })
 export class UpdateUserComponent implements OnInit {
   private userService = inject(UserService);
@@ -28,14 +29,24 @@ export class UpdateUserComponent implements OnInit {
   isLoading = true;
   submitted = false;
 
-  // constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private location: Location) {}
 
   ngOnInit(): void {
     this.updateUserFields = [
       { name: 'firstName', label: 'First Name', type: 'text'},
       { name: 'lastName', label: 'Last Name', type: 'text'},
       { name: 'login', label: 'Login', type: 'text'},
-      { name: 'password', label: 'Password', type: 'password'}
+      { name: 'password', label: 'Password', type: 'password'},
+      {
+        name: 'role',
+        label: 'Role',
+        type: 'select',
+        validators: [Validators.required],
+        options: [
+          { key: 'user', value: 'USER' },
+          { key: 'admin', value: 'ADMIN' }
+        ]
+      }
     ];
 
     const idFromRoute = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -59,7 +70,8 @@ export class UpdateUserComponent implements OnInit {
             firstName: user.firstName,
             lastName: user.lastName,
             login: user.login,
-            password: user.password ?? ''
+            // password: user.password ?? '',
+            role: user.role ?? ''
           };
           this.isLoading = false;
         },
@@ -79,11 +91,12 @@ export class UpdateUserComponent implements OnInit {
       return;
     }
 
-    const updateUser: Register = {
+    const updateUser: AddUser = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       login: formData.login,
-      password: formData.password
+      password: formData.password,
+      role: formData.role
     };
 
     this.userService.updateUser(this.userId, updateUser)
@@ -111,4 +124,9 @@ export class UpdateUserComponent implements OnInit {
   onBackHome(): void {
     this.router.navigateByUrl('');
   }
+
+  onPreviousPage(): void {
+    this.location.back();
+  }
+
 }

@@ -1,20 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from '../../core/service/user.service';
-import { Register } from '../../core/models/Register';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserBasicInfo } from '../../core/models/UserBasicInfo';
 
 @Component({
   selector: 'app-list-users',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './list-users.component.html',
-  styleUrls: ['./list-users.component.css']
+  styleUrl: './list-users.component.css'
 })
 export class ListUsersComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
-  users: Register[] = [];
+  users: UserBasicInfo[] = [];
   properties: string[] = [];
   isLoading = true;
   errorMessage = '';
@@ -36,11 +36,11 @@ export class ListUsersComponent implements OnInit {
     });
   }
 
-  onEditUser(user: Register): void {
+  onEditUser(user: UserBasicInfo): void {
     this.router.navigate(['/crud/update-user', user['id']]);
   }
 
-  onDeleteUser(user: Register): void {
+  onDeleteUser(user: UserBasicInfo): void {
     if (confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName}?`)) {
       console.log("\n\nDeleting user with id : ", user['id'], typeof user['id']);
       console.log("\n\nDeleting user : ", user);
@@ -52,11 +52,7 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
-  onViewUser(user: Register): void {
-    this.userService.viewUser(user).subscribe({
-      next: () => {
-        alert(`User details:\n\nFirst Name: ${user.firstName}\nLast Name: ${user.lastName}\nLogin: ${user.login}`);
-      }
-    });
+  onViewUser(user: UserBasicInfo): void {
+    this.router.navigate(['/crud/read-user', user['id']]);
   }
 }

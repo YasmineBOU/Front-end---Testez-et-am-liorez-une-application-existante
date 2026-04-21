@@ -7,7 +7,7 @@
       <input *ngSwitchCase="'email'" [formControlName]="field.name" [id]="field.name" type="email" class="user-form__input" />
       <input *ngSwitchCase="'password'" [formControlName]="field.name" [id]="field.name" type="password" class="user-form__input" />
       <select *ngSwitchCase="'select'" [formControlName]="field.name" [id]="field.name" class="user-form__select">
-        <option *ngFor="let option of field.options" [value]="option.key">{{ option.value }}</option>
+        <option *ngFor="let option of field.options" [value]="option.value">{{ option.value }}</option>
       </select>
     </ng-container>
 

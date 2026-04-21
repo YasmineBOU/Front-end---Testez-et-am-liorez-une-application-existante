@@ -1,0 +1,47 @@
+.book-page {
+    max-width: 980px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: 24px;
+    background: linear-gradient(160deg, #f8fafc 0%, #eef7f2 100%);
+    border: 1px solid #dbe7df;
+    box-shadow: 0 14px 38px rgba(32, 56, 40, 0.12);
+}
+
+.book-page__header h2 {
+    margin: 0;
+    color: #1f4030;
+}
+
+.book-page__header p {
+    color: #547061;
+}
+
+.book-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.book-card {
+    border-radius: 16px;
+    border: 1px solid #dce8df;
+    background: #fff;
+    padding: 1rem;
+}
+
+.book-card h3 {
+    margin: 0 0 0.5rem;
+    color: #28533b;
+}
+
+.book-page__back-btn {
+    margin-top: 1rem;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    background: #2d5fbe;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}

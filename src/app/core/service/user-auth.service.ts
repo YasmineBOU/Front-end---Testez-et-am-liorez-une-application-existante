@@ -46,6 +46,46 @@ export class AuthService {
     return !this.isTokenExpired(token);
   }
 
+  isAdmin(): boolean {
+    const token = this.getToken();
+    if (!token || this.isTokenExpired(token)) {
+      return false;
+    }
+
+    const roles = this.extractRoles(token);
+    return roles.includes('ADMIN');
+  }
+
+  private extractRoles(token: string): string[] {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const rawRoles = payload?.roles;
+
+      if (!Array.isArray(rawRoles)) {
+        return [];
+      }
+
+      return rawRoles
+        .map((roleEntry: unknown) => {
+          if (typeof roleEntry === 'string') {
+            return roleEntry;
+          }
+          if (
+            roleEntry &&
+            typeof roleEntry === 'object' &&
+            'authority' in roleEntry &&
+            typeof (roleEntry as { authority: unknown }).authority === 'string'
+          ) {
+            return (roleEntry as { authority: string }).authority;
+          }
+          return '';
+        })
+        .filter((role): role is string => role.length > 0);
+    } catch {
+      return [];
+    }
+  }
+
 /*************  ✨ Windsurf Command ⭐  *************/
   /**
    * Check if the token has expired.

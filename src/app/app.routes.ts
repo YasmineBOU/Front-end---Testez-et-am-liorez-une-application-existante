@@ -9,6 +9,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { SingleUserInfoComponent } from './pages/single-user-info/single-user-info.component';
+import { BookReferencesComponent } from './pages/book-references/book-references.component';
 
 export const routes: Routes = [
   {
@@ -25,13 +26,17 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'book-references',
+    component: BookReferencesComponent
+  },
+  {
     path: 'admin-pannel',
     component: AdminPannelComponent,
     canActivate: [AuthGuard]
   },
   {
     path: 'crud',
-    // canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       { path: 'list-user', component: ListUsersComponent },
       { path: 'read-user/:id', component: SingleUserInfoComponent },

@@ -11,14 +11,20 @@ export class AuthGuard implements CanActivate {
   
   canActivate(): boolean | UrlTree {
     console.log('AuthGuard canActivate:', this.authService.isAuthenticated());
-    
-    if (this.authService.isAuthenticated()) {
-        console.log('User is authenticated, allowing access to route.');
-        return true;
-    } else {
-        console.log('User is not authenticated, redirecting to login page.');
-        return this.router.createUrlTree(['/login']);
+
+    if (!this.authService.isAuthenticated()) {
+      alert('You must be logged with an admin account to access this page.');
+      console.log('User is not authenticated, redirecting to another page.');
+      return this.router.createUrlTree(['/login']);
     }
+
+    if (!this.authService.isAdmin()) {
+      // alert('Admin access only. Redirecting to book references page.');
+      return this.router.createUrlTree(['/book-references']);
+    }
+
+    console.log('User is authenticated and admin, allowing access to route.');
+    return true;
   }
 //   canActivate(
 //     route: ActivatedRouteSnapshot,

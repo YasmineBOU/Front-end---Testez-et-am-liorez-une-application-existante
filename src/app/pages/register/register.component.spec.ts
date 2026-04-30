@@ -41,6 +41,7 @@ describe('RegisterComponent', () => {
       ]
     })
     .compileComponents();
+    
     // Mock the alert function
     global.alert = jest.fn();
     // Inject the UserMockService
@@ -51,7 +52,6 @@ describe('RegisterComponent', () => {
 
     // Set the input properties before initializing the component
     component.registerFields = mockRegisterFields;
-    component.submitted = false;
     
     // Access the UserFormComponent instance from the template
     userFormComponent = fixture.debugElement.query(By.directive(UserFormComponent)).componentInstance;

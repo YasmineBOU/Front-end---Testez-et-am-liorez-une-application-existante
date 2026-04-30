@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   loginFields: FormField[] = [];
-  submitted = false;
 
   ngOnInit(): void {
     
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(formData: any): void {
-    this.submitted = true;
+    
     if (!formData) {
       return;
     }
@@ -42,20 +41,18 @@ export class LoginComponent implements OnInit {
       login: formData.login,
       password: formData.password
     };
-    console.log(loginUser.login);
+    
     this.userService.login(loginUser)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
-          alert('Logged in successfully !');
-          console.log("\n\n****Login token : ", response.token);
           this.authService.setToken(response.token);
           localStorage.setItem('loggedInUser', loginUser.login);
           this.router.navigateByUrl('/admin-pannel');
 
         },
         error: (err) => {
-          if ([401, 400, 403].includes(err.status)) {
+          if ([400, 401, 403].includes(err.status)) {
             alert('Incorrect credentials, please try again.');
           } else {
             alert('An error occurred, please try again later.');
@@ -65,7 +62,6 @@ export class LoginComponent implements OnInit {
   }
 
   onReset(): void {
-    this.submitted = false;
   }
 
   onRegisterIfNotRegistered(): void {

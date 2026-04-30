@@ -53,13 +53,15 @@ export class AuthService {
     }
 
     const roles = this.extractRoles(token);
-    return roles.includes('ADMIN');
+    // console.log('Extracted roles from token:', roles);
+    return roles.includes('ROLE_ADMIN');
   }
 
   private extractRoles(token: string): string[] {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const rawRoles = payload?.roles;
+      // console.log('Raw roles from token payload:', rawRoles); 
 
       if (!Array.isArray(rawRoles)) {
         return [];

@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:current": "npx jest $FILE_PATH --watch"
   },
   "private": true,
   "dependencies": {
@@ -28,7 +29,7 @@
     "@angular-devkit/build-angular": "^19.0.7",
     "@angular/cli": "^19.2.16",
     "@angular/compiler-cli": "^19.2.0",
-    "@types/jest": "^29.5.4",
+    "@types/jest": "^29.5.14",
     "baseline-browser-mapping": "^2.10.15",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.3.0",

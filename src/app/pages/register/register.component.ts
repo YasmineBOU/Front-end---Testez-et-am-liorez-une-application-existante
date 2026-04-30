@@ -22,7 +22,6 @@ export class RegisterComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   registerFields: FormField[] = [];
-  submitted = false;
 
   // constructor(private router: Router, private route: ActivatedRoute) { }
 
@@ -35,10 +34,7 @@ export class RegisterComponent implements OnInit {
     ];
   }
 
-  onSubmit(formData: any): void {
-    this.submitted = true;
-
-    
+  onSubmit(formData: any): void { 
     if (!formData) {
       return;
     }
@@ -54,7 +50,7 @@ export class RegisterComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          alert('Registration successful!');
+          alert('Successful registration!');
           this.router.navigateByUrl('login');
         },
         error: (err) => {
@@ -64,7 +60,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onReset(): void {
-    this.submitted = false;
     
   }
 

@@ -10,11 +10,11 @@ import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { SingleUserInfoComponent } from './pages/single-user-info/single-user-info.component';
 import { BookReferencesComponent } from './pages/book-references/book-references.component';
+import { BookReferencesGuard } from './guards/book-references.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    // component: AppComponent,
     component: HomeComponent,
   },
   {
@@ -27,7 +27,8 @@ export const routes: Routes = [
   },
   {
     path: 'book-references',
-    component: BookReferencesComponent
+    component: BookReferencesComponent,
+    canActivate: [BookReferencesGuard]
   },
   {
     path: 'admin-pannel',
@@ -36,7 +37,7 @@ export const routes: Routes = [
   },
   {
     path: 'crud',
-    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       { path: 'list-user', component: ListUsersComponent },
       { path: 'read-user/:id', component: SingleUserInfoComponent },

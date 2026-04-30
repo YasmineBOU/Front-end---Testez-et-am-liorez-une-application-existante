@@ -21,7 +21,6 @@ export class CreateUserComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
   createUserFields: FormField[] = [];
-  submitted = false;
 
   ngOnInit(): void {
     this.createUserFields = [
@@ -43,7 +42,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSubmit(formData: any): void {
-    this.submitted = true;
 
     if (!formData) {
       return;
@@ -71,6 +69,5 @@ export class CreateUserComponent implements OnInit {
   }
 
   onReset(): void {
-    this.submitted = false;
   }
 }

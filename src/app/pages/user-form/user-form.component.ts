@@ -4,14 +4,6 @@ import { FormBuilder, FormGroup, AbstractControl, ReactiveFormsModule } from '@a
 import { MaterialModule } from '../../shared/material.module';
 import { FormField } from '../../core/models/FormField';
 
-// interface FormField {
-//   name: string;
-//   label: string;
-//   type: string; 
-//   validators?: any[];
-//   options?: { key: string, value: string }[]; 
-//   hidden?: boolean;
-// }
 
 @Component({
   selector: 'app-user-form',

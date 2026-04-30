@@ -2,15 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../shared/material.module';
+import { FormField } from '../../core/models/FormField';
 
-interface FormField {
-  name: string;
-  label: string;
-  type: string; 
-  validators?: any[];
-  options?: { key: string, value: string }[]; 
-  hidden?: boolean;
-}
+// interface FormField {
+//   name: string;
+//   label: string;
+//   type: string; 
+//   validators?: any[];
+//   options?: { key: string, value: string }[]; 
+//   hidden?: boolean;
+// }
 
 @Component({
   selector: 'app-user-form',
@@ -35,7 +36,7 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   userForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {}
 
 /**
  * Initialize the form with the given fields and initial data.
@@ -74,7 +75,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       ];
     });
 
-    this.userForm = this.fb.group(formControlsConfig);
+    this.userForm = this.formBuilder.group(formControlsConfig);
   }
 
 /**

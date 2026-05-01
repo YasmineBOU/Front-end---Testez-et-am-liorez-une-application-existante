@@ -25,29 +25,29 @@ export class UpdateUserComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   updateUserFields: FormField[] = [];
   userData: any = {};
-  userId!: number;
+  userId!: number | null;
   isLoading = true;
-  submitted = false;
 
   constructor(private location: Location) {}
 
+
   ngOnInit(): void {
     this.updateUserFields = [
-      { name: 'firstName', label: 'First Name', type: 'text'},
-      { name: 'lastName', label: 'Last Name', type: 'text'},
-      { name: 'login', label: 'Login', type: 'text'},
-      { name: 'password', label: 'Password', type: 'password'},
-      {
-        name: 'role',
-        label: 'Role',
-        type: 'select',
-        validators: [Validators.required],
-        options: [
-          { key: 'user', value: 'USER' },
-          { key: 'admin', value: 'ADMIN' }
-        ]
-      }
-    ];
+    { name: 'firstName', label: 'First Name', type: 'text', validators: [Validators.required] },
+    { name: 'lastName', label: 'Last Name', type: 'text', validators: [Validators.required] },
+    { name: 'login', label: 'Login', type: 'text', validators: [Validators.required] },
+    { name: 'password', label: 'Password', type: 'password'},
+    {
+      name: 'role',
+      label: 'Role',
+      type: 'select',
+      validators: [Validators.required],
+      options: [
+        { key: 'user', value: 'USER' },
+        { key: 'admin', value: 'ADMIN' }
+      ]
+    }
+  ];
 
     const idFromRoute = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     if (!idFromRoute) {
@@ -61,6 +61,9 @@ export class UpdateUserComponent implements OnInit {
   }
 
   private loadUserToEdit(): void {
+    if (!this.userId) {
+      return;
+    }
     this.isLoading = true;
     this.userService.getUserById(this.userId)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -70,7 +73,7 @@ export class UpdateUserComponent implements OnInit {
             firstName: user.firstName,
             lastName: user.lastName,
             login: user.login,
-            // password: user.password ?? '',
+            password: '',
             role: user.role ?? ''
           };
           this.isLoading = false;
@@ -84,10 +87,9 @@ export class UpdateUserComponent implements OnInit {
   }
 
   onSubmit(formData: any): void {
-    this.submitted = true;
 
     
-    if (!formData) {
+    if (!formData || !this.userId) {
       return;
     }
 
@@ -107,14 +109,12 @@ export class UpdateUserComponent implements OnInit {
           this.router.navigateByUrl('/crud/list-user');
         },
         error: (err) => {
-          alert('Something went wrong : ' + err.message);
+          alert('Something went wrong: ' + err.message);
         }
       });
   }
 
   onReset(): void {
-    this.submitted = false;
-    
   }
 
   onLoginIfAlreadyRegistered(): void {

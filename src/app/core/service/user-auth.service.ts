@@ -15,12 +15,10 @@ export class AuthService {
    * @param token The authentication token to be set.
    */
   setToken(token: string): void {
-    console.log('Setting token in setToken:', token);
     localStorage.setItem(this.tokenKey, token);
   }
 
   getToken(): string {
-    console.log('Getting token in getToken:', localStorage.getItem(this.tokenKey));
     return localStorage.getItem(this.tokenKey) || '';
   }
 
@@ -53,7 +51,6 @@ export class AuthService {
     }
 
     const roles = this.extractRoles(token);
-    // console.log('Extracted roles from token:', roles);
     return roles.includes('ROLE_ADMIN');
   }
 
@@ -99,10 +96,12 @@ export class AuthService {
   private isTokenExpired(token: string): boolean {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
+      // extract expiration time from payload
       const exp = payload.exp;
       if (!exp) {
         return true; 
       }
+      // Get current time in seconds
       const now = Math.floor(new Date().getTime() / 1000);
       return exp < now;
     } catch (e) {

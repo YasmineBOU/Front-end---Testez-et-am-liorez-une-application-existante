@@ -17,7 +17,39 @@ describe('AdminPannelComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onListUsers', () => {
+    it('should navigate to "/crud/list-user" page', () => {
+      const routerNavigateSpy = jest.spyOn(component['router'], 'navigateByUrl');
+      component.onListUsers();
+      expect(routerNavigateSpy).toHaveBeenCalledWith('/crud/list-user');
+    });
+  });
+
+  describe('onCreateUser', () => {
+    it('should navigate to "/crud/create-user" page', () => {
+      const routerNavigateSpy = jest.spyOn(component['router'], 'navigateByUrl');
+      component.onCreateUser();
+      expect(routerNavigateSpy).toHaveBeenCalledWith('/crud/create-user');
+    });
+  });
+
+  describe('onUpdateUser', () => {
+    it('should navigate to "/crud/list-user" page', () => {
+      const routerNavigateSpy = jest.spyOn(component['router'], 'navigateByUrl');
+      component.onUpdateUser();
+      expect(routerNavigateSpy).toHaveBeenCalledWith('/crud/list-user');
+    });
+  });
+
+  describe('onDeleteUser', () => {
+    it('should navigate to "/crud/list-user" page', () => {
+      const routerNavigateSpy = jest.spyOn(component['router'], 'navigateByUrl');
+      component.onDeleteUser();
+      expect(routerNavigateSpy).toHaveBeenCalledWith('/crud/list-user');
+    });  
+  });   
 });

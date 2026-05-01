@@ -17,7 +17,24 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
+  
+  describe('onRegister', () => {
+    it('should navigate to "register" page', () => {
+      const routerNavigateSpy = jest.spyOn(component['router'], 'navigateByUrl');
+      component.onRegister();
+      expect(routerNavigateSpy).toHaveBeenCalledWith('register');
+    });
+  });
+
+  describe('onLogin', () => {
+    it('should navigate to "login" page', () => {
+      const routerNavigateSpy = jest.spyOn(component['router'], 'navigateByUrl');
+      component.onLogin();
+      expect(routerNavigateSpy).toHaveBeenCalledWith('login');
+    });
+  });
+  
 });

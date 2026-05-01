@@ -33,13 +33,7 @@
       <tbody>
         <tr *ngFor="let user of users">
           <td *ngFor="let property of properties" [attr.data-label]="property | titlecase">
-            <!-- @if (property === 'created_at' || property === 'updated_at') {
-              {{ user[property] | date:'dd/MM/yyyy HH:mm' }}
-            } @else {
-              {{ user[property] }}
-            } -->
             {{ user[property] }}
-          
           </td>
           <td class="users-table__actions" data-label="Actions">
             <button class="button button-view" title="View" (click)="onViewUser(user)">

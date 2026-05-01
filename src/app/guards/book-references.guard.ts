@@ -10,11 +10,9 @@ export class BookReferencesGuard implements CanActivate {
 
   
   canActivate(): boolean | UrlTree {
-    console.log('BookReferencesGuard canActivate:', this.authService.isAuthenticated());
 
     if (!this.authService.isAuthenticated()) {
-      alert('You must be logged to access this page.');
-      console.log('User is not authenticated, redirecting to another page.');
+      alert('You must be logged in to access this page.');
       return this.router.createUrlTree(['/login']);
     }
 

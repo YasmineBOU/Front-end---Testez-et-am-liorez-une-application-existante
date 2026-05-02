@@ -94,8 +94,10 @@ describe('Login Page', () => {
         cy.get('input[id="login"]').type(users.validAdminUser.login);
         cy.get('input[id="password"]').type(users.validAdminUser.password);
         
+        cy.intercept('POST', '/api/login').as('loginRequest');
         cy.contains('button', 'Login').click();
-        
+        cy.wait('@loginRequest');
+
         cy.window().its('localStorage').invoke('getItem', localStorage.tokenKey).should('exist');
         cy.window().its('localStorage').invoke('getItem', localStorage.loggedInUserKey).should('exist');            
       });
@@ -104,7 +106,9 @@ describe('Login Page', () => {
         cy.get('input[id="login"]').type(users.validRegularUser.login);
         cy.get('input[id="password"]').type(users.validRegularUser.password);
 
+        cy.intercept('POST', '/api/login').as('loginRequest');
         cy.contains('button', 'Login').click();
+        cy.wait('@loginRequest');
 
         cy.window().its('localStorage').invoke('getItem', localStorage.tokenKey).should('exist');
         cy.window().its('localStorage').invoke('getItem', localStorage.loggedInUserKey).should('exist');
@@ -112,17 +116,34 @@ describe('Login Page', () => {
         
     });
 
-    it('should navigate to the "/admin-pannel" page after successful login', () => {
-      cy.get('input[id="login"]').type(users.validAdminUser.login);
-      cy.get('input[id="password"]').type(users.validAdminUser.password);
+    describe('Navigation After successful login', () => {
 
-      cy.contains('button', 'Login').click();
+      it('should navigate to the "/admin-pannel" for Admin user page after successful login', () => {
+        cy.get('input[id="login"]').type(users.validAdminUser.login);
+        cy.get('input[id="password"]').type(users.validAdminUser.password);
 
-      cy.window().its('localStorage').invoke('getItem', localStorage.tokenKey).should('match', regexJwtToken);
-      cy.window().its('localStorage').invoke('getItem', localStorage.loggedInUserKey).should('eq', users.validAdminUser.login);
-      cy.url().should('include', '/admin-pannel');
+        cy.intercept('POST', '/api/login').as('loginRequest');
+        cy.contains('button', 'Login').click();
+        cy.wait('@loginRequest');
+
+        cy.window().its('localStorage').invoke('getItem', localStorage.tokenKey).should('match', regexJwtToken);
+        cy.window().its('localStorage').invoke('getItem', localStorage.loggedInUserKey).should('eq', users.validAdminUser.login);
+        cy.url().should('include', '/admin-pannel');
+      });
+
+      it('should navigate to the "/book-references" for regular user page after successful login', () => {
+        cy.get('input[id="login"]').type(users.validRegularUser.login);
+        cy.get('input[id="password"]').type(users.validRegularUser.password);
+
+        cy.intercept('POST', '/api/login').as('loginRequest');
+        cy.contains('button', 'Login').click();
+        cy.wait('@loginRequest');
+
+        cy.window().its('localStorage').invoke('getItem', localStorage.tokenKey).should('match', regexJwtToken);
+        cy.window().its('localStorage').invoke('getItem', localStorage.loggedInUserKey).should('eq', users.validRegularUser.login);
+        cy.url().should('include', '/book-references');
+      });
     });
-
   });
 
 });

@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "topic": "Software craftsmanship"
+  },
+  {
+    "title": "Domain-Driven Design",
+    "author": "Eric Evans",
+    "topic": "Architecture and modeling"
+  },
+  {
+    "title": "Refactoring",
+    "author": "Martin Fowler",
+    "topic": "Code improvement"
+  }
+]

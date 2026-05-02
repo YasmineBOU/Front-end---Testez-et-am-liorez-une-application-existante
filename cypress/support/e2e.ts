@@ -13,6 +13,8 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+/// <reference path="./commands.d.ts" />
+
 // Import commands.js using ES2015 syntax:
 import './commands'
 import { setupMockBackend } from '../mock-server'

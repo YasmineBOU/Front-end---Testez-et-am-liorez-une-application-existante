@@ -1,0 +1,14 @@
+{
+  "validAdminUser": {
+    "login": "cagent",
+    "password": "cagent1234"
+  },
+  "validRegularUser": {
+    "login": "tregister",
+    "password": "tregister"
+  },
+  "invalidUser": {
+    "login": "invalidlogin",
+    "password": "wrongpassword"
+  }
+}

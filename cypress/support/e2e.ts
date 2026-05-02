@@ -15,3 +15,8 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import { setupMockBackend } from '../mock-server'
+
+beforeEach(() => {
+	setupMockBackend()
+})

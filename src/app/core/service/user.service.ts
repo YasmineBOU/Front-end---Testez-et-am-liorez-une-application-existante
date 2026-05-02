@@ -18,7 +18,6 @@ export class UserService {
   }
   
   login(user: Login): Observable<{ token: string }> {
-    // return this.httpClient.post('/api/login', user);
     return this.httpClient.post<{ token: string }>('/api/login', user);
   }
   
@@ -39,6 +38,6 @@ export class UserService {
   }
 
   deleteUser(userId: number): Observable<Object> {
-    return this.httpClient.get(`/api/delete-user/${userId}`);
+    return this.httpClient.delete(`/api/delete-user/${userId}`);
   }
 }

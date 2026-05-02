@@ -25,9 +25,9 @@ function createJwtToken(roles: string[]): string {
 
 /**
  * Custom login command that:
+ * - Visits a same-origin page and seeds localStorage before load
  * - Generates a valid JWT token matching app expectations
  * - Populates localStorage with token and user info
- * - Does NOT navigate (specs handle their own navigation)
  * 
  * Usage:
  *   cy.login()         // Login as regular user
@@ -41,13 +41,15 @@ Cypress.Commands.add('login', (userType = 'user') => {
   // Generate a valid JWT token
   const token = createJwtToken(isAdmin ? ['ROLE_ADMIN'] : ['ROLE_USER']);
 
-  // Populate localStorage with authentication
-  cy.window().then((win) => {
-    win.localStorage.setItem(localStorageFixture.tokenKey, token);
-    win.localStorage.setItem(
-      localStorageFixture.loggedInUserKey,
-      testUser.login
-    );
+  // Seed localStorage on the app origin before the next page loads
+  cy.visit('/login', {
+    onBeforeLoad(win) {
+      win.localStorage.setItem(localStorageFixture.tokenKey, token);
+      win.localStorage.setItem(
+        localStorageFixture.loggedInUserKey,
+        testUser.login
+      );
+    },
   });
 });
 

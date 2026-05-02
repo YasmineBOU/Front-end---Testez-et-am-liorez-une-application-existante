@@ -1,14 +1,36 @@
 {
   "validAdminUser": {
+    "firstName": "Cypress",
+    "lastName": "Agent",
     "login": "cagent",
-    "password": "cagent1234"
+    "password": "cagent1234",
+    "role": "ADMIN"
   },
   "validRegularUser": {
+    "firstName": "Test",
+    "lastName": "Register",
     "login": "tregister",
-    "password": "tregister"
+    "password": "tregister",
+    "role": "USER"
   },
   "invalidUser": {
+    "firstName": "Invalid",
+    "lastName": "User",
     "login": "invalidlogin",
-    "password": "wrongpassword"
+    "password": "wrongpassword",
+    "role": ""
+  },
+  "serverErrorUser": {
+    "firstName": "Server",
+    "lastName": "Error",
+    "login": "server-error-user",
+    "password": "server-error-password",
+    "role": ""
+  },
+  "validNewUser": {
+    "firstName": "Register",
+    "lastName": "Test",
+    "login": "rtest",
+    "password": "rtest"
   }
 }

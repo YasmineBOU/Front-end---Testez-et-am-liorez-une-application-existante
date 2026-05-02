@@ -10,10 +10,9 @@ describe('Book References Page', () => {
 
     it('should display the main UI elements', () => {
       // Main title of the form
-      cy.get('h2').should('be.visible').and('contain.text', 'Book References');
-      // cy.contains('h2', "Book References").should('be.visible');
+      cy.contains('h2', 'Book References').should('be.visible');
       cy.contains('p', 'Welcome. You can browse public book references on this page.').should('be.visible'); 
-      // Form Buttons
+      // Buttons
       cy.contains('button', 'Back Home').should('be.visible');
     });
   });

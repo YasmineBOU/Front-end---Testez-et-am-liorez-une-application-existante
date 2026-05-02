@@ -153,9 +153,27 @@ export function setupMockBackend(): void {
     });
   });
 
-  cy.intercept("POST", "/api/add-user", {
-    statusCode: 201,
-    body: { message: "User created successfully" },
+  cy.intercept("POST", "/api/add-user", (req) => {
+    const body = req.body as RegisterBody;
+
+    if (isSameUser(body.login, users.regular)) {
+      req.reply({
+        statusCode: 409,
+        body: {
+          error: "User already exists",
+          status: 409,
+          message: "Login already registered",
+        },
+      });
+      return;
+    }
+
+    req.reply({
+      statusCode: 201,
+      body: {
+        message: "User created successfully",
+      },
+    });
   });
 
   cy.intercept("PUT", "/api/update-user/*", {

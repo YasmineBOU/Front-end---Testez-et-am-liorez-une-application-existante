@@ -32,5 +32,12 @@
     "lastName": "Test",
     "login": "rtest",
     "password": "rtest"
+  },
+  "validCreatedUser": {
+    "firstName": "Created",
+    "lastName": "User",
+    "login": "cuser",
+    "password": "cuser",
+    "role": "USER"
   }
 }

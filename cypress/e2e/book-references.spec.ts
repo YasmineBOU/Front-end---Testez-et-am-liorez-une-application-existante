@@ -1,8 +1,5 @@
 describe('Book References Page', () => {
-  const users = require('../fixtures/users.json');
   const bookReferences = require('../fixtures/book-references.json');
-  const localStorage = require('../fixtures/localStorage.json');
-  const regexJwtToken = /^[^.]+\.[^.]+\.[^.]+$/;
 
   beforeEach(() => {
     cy.login('user'); // Login as regular user (cached across specs)

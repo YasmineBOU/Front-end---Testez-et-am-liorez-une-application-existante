@@ -18,14 +18,14 @@
     "lastName": "User",
     "login": "invalidlogin",
     "password": "wrongpassword",
-    "role": ""
+    "role": null
   },
   "serverErrorUser": {
     "firstName": "Server",
     "lastName": "Error",
     "login": "server-error-user",
     "password": "server-error-password",
-    "role": ""
+    "role": null
   },
   "validNewUser": {
     "firstName": "Register",
@@ -39,5 +39,15 @@
     "login": "cuser",
     "password": "cuser",
     "role": "USER"
+  },
+  
+  "singleUserInfo": {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "login": "jdoe",
+    "role": "USER",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
   }
 }

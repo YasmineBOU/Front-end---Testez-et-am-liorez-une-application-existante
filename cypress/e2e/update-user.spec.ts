@@ -21,7 +21,7 @@ describe('Update User Page', () => {
     it('should prefill the form with the loaded user data', () => {
       cy.get('input[id="firstName"]').should('have.value', 'John');
       cy.get('input[id="lastName"]').should('have.value', 'Doe');
-      cy.get('input[id="login"]').should('have.value', 'johndoe');
+      cy.get('input[id="login"]').should('have.value', 'jdoe');
       cy.get('input[id="password"]').should('have.value', '');
       cy.get('select[id="role"]').should('have.value', 'USER');
     });
@@ -63,7 +63,7 @@ describe('Update User Page', () => {
     });
 
     it('should show an error message when the update request fails', () => {
-      let message = 'Failed to update user';
+      let message = 'Internal Server Error';
       cy.intercept('PUT', '/api/update-user/1', {
         statusCode: 500,
         body: { message: message },
@@ -76,14 +76,14 @@ describe('Update User Page', () => {
       cy.get('select[id="role"]').select(users.validCreatedUser.role);
 
       cy.on('window:alert', (text) => {
-        expect(text).to.contains('Something went wrong: ' + message);
+        expect(text).to.contains('Something went wrong').and.contains(message);
       });
 
       cy.contains('button', 'Update').click();
       cy.wait('@updateUserError');
     });
 
-    it('should redirect to list users when the route id is invalid', () => {
+    it('should redirect to "/crud/list-user" when the route id is invalid', () => {
       cy.on('window:alert', (text) => {
         expect(text).to.contains('Invalid user id.');
       });

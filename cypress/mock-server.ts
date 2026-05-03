@@ -131,11 +131,24 @@ export function setupMockBackend(): void {
     });
   });
 
-  cy.intercept("GET", "/api/read-user", [
-    { id: 1, firstName: "John", lastName: "Doe", role: "USER" },
-    { id: 2, firstName: "Jane", lastName: "Smith", role: "ADMIN" },
-  ]);
+  cy.intercept("GET", "/api/read-user", (req) => {
+    if (req.url.includes("force-error=true")) { 
+      req.reply({
+        statusCode: 500,
+        body: { error: "Internal Server Error" },
+      });
+      return;
+    }
 
+    req.reply({
+      statusCode: 200,
+      body: [
+        { id: 1, firstName: "John", lastName: "Doe", role: "USER" },
+        { id: 2, firstName: "Jane", lastName: "Smith", role: "ADMIN" },
+      ],
+    });
+  });
+  
   cy.intercept("GET", "/api/read-user/*", (req) => {
     const userId = Number(req.url.split("/").pop());
 
@@ -145,7 +158,7 @@ export function setupMockBackend(): void {
         id: userId,
         firstName: "John",
         lastName: "Doe",
-        login: "johndoe",
+        login: "jdoe",
         role: "USER",
         created_at: "2026-01-01T00:00:00Z",
         updated_at: "2026-01-01T00:00:00Z",
@@ -176,13 +189,35 @@ export function setupMockBackend(): void {
     });
   });
 
-  cy.intercept("PUT", "/api/update-user/*", {
-    statusCode: 200,
-    body: { message: "User updated successfully" },
+  cy.intercept("PUT", "/api/update-user/*", (req) => {
+    if (req.url.includes("force-error=true")) { 
+      req.reply({
+        statusCode: 500,
+        body: { error: "Internal Server Error" },
+      });
+      return;
+    }
+
+    req.reply({
+      statusCode: 200,
+      body: { message: "User updated successfully" },
+    });
   });
 
-  cy.intercept("DELETE", "/api/delete-user/*", {
-    statusCode: 200,
-    body: { message: "User deleted successfully" },
+  cy.intercept("DELETE", "/api/delete-user/*", (req) => {
+    if (req.url.includes("force-error=true")) { 
+      req.reply({
+        statusCode: 500,
+        body: { error: "Internal Server Error" },
+      });
+      return;
+    }
+
+    // Sinon, retourne une réponse normale
+    req.reply({
+      statusCode: 200,
+      body: { message: "User deleted successfully" },
+    });
   });
+
 }

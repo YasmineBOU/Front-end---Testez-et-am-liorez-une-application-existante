@@ -256,7 +256,7 @@ describe('UserService', () => {
   });
 
   describe('deleteUser', () => {
-    it('should call httpClient.get with correct URL and return success response', () => {
+    it('should call httpClient.delete with correct URL and return success response', () => {
       const userId = 9;
       let response: object | undefined;
 
@@ -265,7 +265,7 @@ describe('UserService', () => {
       });
 
       const req = httpMock.expectOne(`/api/delete-user/${userId}`);
-      expect(req.request.method).toBe('GET');
+      expect(req.request.method).toBe('DELETE');
       req.flush({ message: 'User deleted successfully' });
 
       expect(response).toEqual({ message: 'User deleted successfully' });

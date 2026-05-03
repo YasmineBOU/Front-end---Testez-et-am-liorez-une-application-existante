@@ -16,6 +16,7 @@
 /// <reference path="./commands.d.ts" />
 
 // Import commands.js using ES2015 syntax:
+import '@cypress/code-coverage/support'
 import './commands'
 import { setupMockBackend } from '../mock-server'
 

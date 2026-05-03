@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom", "es2015"],
-    "types": ["cypress", "node"],
+    "types": ["cypress", "mocha", "node"],
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,

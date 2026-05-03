@@ -11,7 +11,8 @@
     "test:current": "npx jest $FILE_PATH --watch",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test:e2e": "start-server-and-test http://localhost:4200 cy:run"
+    "cy:coverage": "npm run cy:run -- --env coverage=true",
+    "cy:coverage:report": "nyc report --reporter=text --reporter=html"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -32,15 +34,22 @@
     "@angular-devkit/build-angular": "^19.0.7",
     "@angular/cli": "^21.2.9",
     "@angular/compiler-cli": "^19.2.0",
+    "@cypress/code-coverage": "^4.0.3",
     "@cypress/webpack-dev-server": "^1.8.4",
+    "@cypress/webpack-preprocessor": "^7.1.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.6.0",
     "baseline-browser-mapping": "^2.10.15",
     "cypress": "^15.14.2",
     "cypress-grep": "^2.14.0",
+    "esbuild": "^0.28.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.3.0",
     "jest-preset-angular": "^16.1.2",
     "msw": "^2.14.2",
+    "nyc": "^18.0.0",
     "ts-loader": "^9.5.7",
     "typescript": "~5.7.2",
     "webpack-dev-server": "^1.16.5"

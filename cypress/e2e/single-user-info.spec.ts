@@ -1,23 +1,24 @@
-function formatDateToString(dateString: string): string {
-  const date = new Date(dateString);
 
-  if (isNaN(date.getTime())) {
-    throw new Error("Invalid input date.");
-  }
-
-  const pad = (num: number) => num.toString().padStart(2, '0');
-  const day = pad(date.getDate());
-  const month = pad(date.getMonth() + 1); 
-  const year = date.getFullYear();
-  const hours = pad(date.getHours());
-  const minutes = pad(date.getMinutes());
-
-  return `${day}/${month}/${year}, ${hours}:${minutes}`;
-};
 
 describe('Single User Info Page', () => {
   const users = require('../fixtures/users.json');
+  function formatDateToString(dateString: string): string {
+    const date = new Date(dateString);
 
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid input date.");
+    }
+
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1); 
+    const year = date.getFullYear();
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}`;
+  };
+  
   beforeEach(() => {
     cy.login('admin');
     cy.intercept('GET', '/api/read-user/1').as('getUser');

@@ -150,6 +150,14 @@ export function setupMockBackend(): void {
   });
   
   cy.intercept("GET", "/api/read-user/*", (req) => {
+    if (req.url.includes("force-error=true")) { 
+      req.reply({
+        statusCode: 500,
+        body: { error: "Internal Server Error" },
+      });
+      return;
+    }
+
     const userId = Number(req.url.split("/").pop());
 
     req.reply({

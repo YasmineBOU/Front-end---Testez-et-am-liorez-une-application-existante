@@ -70,21 +70,22 @@ describe('Single User Info Page', () => {
   });
 
   describe('Button functionality', () => {
-    describe('Back to users list button', () => {
+    describe('"Back to users list" button', () => {
       it('should navigate back to the "/crud/users-list" page', () => {
         cy.contains('button', 'Back to users list').should('be.visible').click();
         cy.url().should('include', '/crud/list-user');
       });
     });
     
-    describe('Edit User button', () => {
+    describe('"Edit User" button', () => {
       it('should navigate to the update user page for the displayed user', () => {
         cy.contains('button', 'Edit User').should('be.visible').click();
         cy.url().should('include', '/crud/update-user/1');
       });
+      
     });
 
-    describe('Delete User button', () => {
+    describe('"Delete User" button', () => {
       it('should delete the user when confirmed and navigate back to the users list page', () => {
         cy.intercept('DELETE', '/api/delete-user/1').as('deleteUser');
         cy.on('window:confirm', () => true);
@@ -110,16 +111,11 @@ describe('Single User Info Page', () => {
           body: { error: errorMessage },
         }).as('deleteUserError');
 
-        // Simule la confirmation de la suppression
         cy.on('window:confirm', () => true);
 
-        // Clique sur le bouton de suppression
         cy.contains('button', 'Delete User').should('be.visible').click();
-
-        // Attends que la requête soit interceptée
         cy.wait('@deleteUserError');
 
-        // Vérifie que l'alerte contient le message d'erreur attendu
         cy.on('window:alert', (text) => {
           expect(text).to.include('Unable to delete user:');
           expect(text).to.include(errorMessage);

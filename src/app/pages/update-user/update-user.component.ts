@@ -114,17 +114,6 @@ export class UpdateUserComponent implements OnInit {
       });
   }
 
-  onReset(): void {
-  }
-
-  onLoginIfAlreadyRegistered(): void {
-    this.router.navigateByUrl('/login');
-  }
-
-  onBackHome(): void {
-    this.router.navigateByUrl('');
-  }
-
   onPreviousPage(): void {
     this.location.back();
   }
